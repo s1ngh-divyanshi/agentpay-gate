@@ -1,0 +1,64 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "sku": "PROD-OFFICE-CHAIR-01",
+    "name": "ErgoPro High-Back Mesh Chair",
+    "description": "Ergonomic mesh office chair with lumbar support and adjustable armrests.",
+    "category": "Office Furniture",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "INR",
+      "price": 3499.00,
+      "availability": "https://schema.org/InStock",
+      "inventoryLevel": 15,
+      "bulkDiscounts": [
+        { "minQuantity": 5, "discountPercent": 10 }
+      ]
+    },
+    "metadata": {
+      "leadTimeDays": 2,
+      "requiresHumanVerification": false
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "sku": "PROD-MECH-KB-02",
+    "name": "KeyCraft Wireless Mechanical Keyboard",
+    "description": "Hot-swappable tactile mechanical keyboard with Bluetooth 5.2 and RGB.",
+    "category": "Electronics",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "INR",
+      "price": 4200.00,
+      "availability": "https://schema.org/InStock",
+      "inventoryLevel": 8,
+      "bulkDiscounts": []
+    },
+    "metadata": {
+      "leadTimeDays": 1,
+      "requiresHumanVerification": false
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "sku": "PROD-SERVER-BLADE-99",
+    "name": "Enterprise High-Density Server Blade",
+    "description": "Enterprise compute blade for local data processing.",
+    "category": "Enterprise Hardware",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "INR",
+      "price": 85000.00,
+      "availability": "https://schema.org/InStock",
+      "inventoryLevel": 2,
+      "bulkDiscounts": []
+    },
+    "metadata": {
+      "leadTimeDays": 7,
+      "requiresHumanVerification": true
+    }
+  }
+]

@@ -1,0 +1,26 @@
+cat << 'EOF' > .gitignore
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Environment secrets (Crucial: never push API keys)
+.env
+*.env
+backend/.env
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Dynamic runtime ledger (keep baseline or ignore local mutations)
+*.log
+EOF
+
+backend/app/data/audit_ledger.json

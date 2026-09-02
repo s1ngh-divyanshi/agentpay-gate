@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-main: #0b0d13;
+  --bg-card-start: #151924;
+  --bg-card-end: #10131c;
+  --bg-surface-inset: #0c0e15;
+  --border-card: #232a3b;
+  --border-hover: #384259;
+  --border-inset: #1c2230;
+  --text-main: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Glass & Elevated Card Panels */
+.panel-card {
+  background: linear-gradient(180deg, var(--bg-card-start) 0%, var(--bg-card-end) 100%);
+  border: 1px solid var(--border-card);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+}
+
+.panel-card-hover {
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.panel-card-hover:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+}
+
+.surface-inset {
+  background-color: var(--bg-surface-inset);
+  border: 1px solid var(--border-inset);
+}
+
+/* Safe Custom Horizontal Scrollbar */
+.custom-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #2b3345;
+  border-radius: 4px;
+}
