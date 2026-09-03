@@ -1,108 +1,139 @@
+<div align="center">
+
 # AgentPay Gate ⚡
 
-> **Track 01: AI Growth & Agentic Commerce** — Gated Transactional Middleware and Immutable Audit Ledger for Machine-to-Merchant Payments.
+### Deterministic Governance & Cryptographic Audit Middleware for Agentic Commerce
 
-![AgentPay Architecture](https://img.shields.io/badge/Status-Production%20Ready-emerald) ![Python](https://img.shields.io/badge/Backend-FastAPI-blue) ![Frontend](https://img.shields.io/badge/Frontend-Tailwind%20CSS-indigo) ![Security](https://img.shields.io/badge/Audit-SHA--256%20Merkle-amber)
+[![Razorpay AI Builder 2026](https://img.shields.io/badge/Razorpay-AI%20Builder%20Internship%202026-0c2340?style=for-the-badge&logo=razorpay&logoColor=3395FF)](https://razorpay.com/buildathon)
+[![Track 01](https://img.shields.io/badge/Track%2001-AI%20Growth%20%26%20Agentic%20Commerce-blue?style=for-the-badge)](#)
+[![Security Architecture](https://img.shields.io/badge/Ledger-SHA--256%20Block--Linked-10b981?style=for-the-badge)](#)
+
+<p align="center">
+  A deterministic proxy enforcing organizational spend constraints, automated human fallback escalations, and tamper-evident cryptographic provenance for autonomous AI buyer agents.
+</p>
+
+</div>
 
 ---
 
-## 🚀 Overview
+## 🎯 Context
 
-As autonomous AI procurement agents gain transaction capabilities, probabilistic LLMs introduce severe financial risks: prompt injection attacks, runaway API costs, and silent policy violations.
+Developed for the **Razorpay AI Builder Internship 2026** under **Track 01: AI Growth & Agentic Commerce**.
 
-**AgentPay Gate** acts as an uncompromisable deterministic proxy layer between autonomous AI buyer agents and payment gateways (Razorpay). It intercepts purchase intents, validates SKUs against live merchant feeds, enforces hard organizational spend caps (e.g., ₹5,000/tx), signs append-only cryptographic audit ledgers, and degrades gracefully to human-in-the-loop workflows when limits are breached.
+Autonomous AI agents are fundamentally probabilistic. Exposing raw payment credentials to LLMs risks prompt injection, price hallucinations, and runaway spend loops. **AgentPay Gate** serves as a deterministic proxy between AI agents and Razorpay rails—validating catalog prices out-of-band, enforcing strict transaction limits, and logging every action to an immutable SHA-256 audit ledger.
 
 ---
 
-## 🛠️ Architecture & Core Components
+## 🏛️ System Architecture
 
 ```text
- [ Autonomous AI Agent ]
-          │ (Intent / Basket Payload)
-          ▼
-   [ AgentPay Gate ] ──(Deterministic Rule Check: Limit ≤ ₹5,000?)
-          ├── YES ──► [ Razorpay API ] ──► Autonomous Settlement (Order ID)
-          └── NO  ──► [ Fallback Engine ] ──► Human-in-the-Loop Payment Link
-          │
-          ▼
-   [ SHA-256 Cryptographic Audit Ledger ] (Append-only Merkle chain)
-```
+               ┌──────────────────────────────┐
+               │   Autonomous AI Buyer Agent  │
+               └──────────────┬───────────────┘
+                              │ Dispatches Intent
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    AGENTPAY GATE MIDDLEWARE                 │
+│                                                             │
+│  [1] Catalog Verification  ──►  Re-checks live SKU pricing  │
+│  [2] Price Arithmetic      ──►  Detects hallucinated fees   │
+│  [3] Policy Boundary Engine──►  Enforces Limit (≤ ₹5,000)   │
+└──────────────┬──────────────────────────────┬───────────────┘
+               │ Passed Gate                  │ Breached Limit
+               ▼                              ▼
+  ┌─────────────────────────┐    ┌─────────────────────────┐
+  │  Razorpay Orders API    │    │  Razorpay Payment Links │
+  │  (Autonomous Auto-Pay)  │    │  (Human-in-the-Loop)    │
+  └────────────┬────────────┘    └────────────┬────────────┘
+               │                              │
+               └──────────────┬───────────────┘
+                              ▼
+  ┌─────────────────────────────────────────────────────────┐
+  │         SHA-256 BLOCK-LINKED AUDIT LEDGER               │
+  │     [Block N-1] ◄── [Block N] ◄── [Block N+1]           │
+  │  (Timestamp, Mandate, Items, Reasoning, Hash Signature) │
+  └─────────────────────────────────────────────────────────┘
 
-1. **Deterministic Spend-Gate Engine:** Evaluates multi-item baskets against strict organizational mandates and per-transaction limits.
-2. **Graceful Degradation Protocol:** Automatically redirects high-value or restricted orders into secure payment links (`ESCALATED_TO_HUMAN`) rather than failing abruptly.
-3. **Cryptographic Audit Ledger:** Every evaluation and settlement action is stored in an immutable, block-linked SHA-256 chain ensuring tamper-evident provenance.
-4. **Interactive Governance Dashboard:** A dark-mode financial UI featuring live metric tracking, transaction inspection drawers, real-time integrity chain validation, and one-click demo triggers.
+```
 
 ---
 
-## 📂 Project Structure
+## ⚡ Core Features
+
+- **Deterministic Spend-Gate:** Recalculates cart arithmetic out-of-band against merchant feeds; strictly enforces hard monetary caps (e.g., ₹5,000/tx).
+- **Graceful Degradation:** Diverts high-value or restricted orders into secure Razorpay Payment Links for human supervisor review.
+- **Block-Linked Audit Trail:** Cryptographically seals every decision, cart payload, and reasoning trace in a backward-linked SHA-256 chain ($H_n = \text{SHA-256}(H_{n-1} \parallel \text{Data}_n)$).
+- **Governance Dashboard:** Real-time financial telemetry, slide-out transaction proof inspectors, and an interactive simulation sandbox.
+
+---
+
+## 📂 Repository Structure
 
 ```text
 agentpay-core/
 ├── backend/
 │   ├── app/
-│   │   ├── api/          # FastAPI routers (catalog, gate, checkout, audit)
-│   │   ├── core/         # Spend gate logic, Razorpay engine, audit ledger service
-│   │   └── data/         # Mock catalog & audit_ledger.json store
-│   └── .env              # Environment variables & API keys
+│   │   ├── api/          # Catalog, gate, checkout, and audit endpoints
+│   │   ├── core/         # Spend-gate engine, Razorpay handler, and Merkle ledger
+│   │   └── data/         # Catalog data and persistent JSON ledger
+│   └── requirements.txt
+├── buyer_agent/          # Autonomous AI buyer implementation & tool definitions
 ├── frontend/
-│   ├── css/
-│   │   └── styles.css    # Custom design tokens and modern styling
-│   ├── js/
-│   │   └── app.js        # Dashboard state, API sync, and sandbox triggers
-│   └── index.html        # Main governance and audit interface
+│   ├── css/styles.css    # UI styling tokens
+│   ├── js/app.js         # Client-side state, sandbox triggers, & chain verifier
+│   └── index.html        # Telemetry & governance dashboard
 └── README.md
+
 ```
 
 ---
 
-## ⚙️ Quickstart & Local Installation
+## 🚀 Quickstart
 
-### 1. Clone the Repository
+### 1. Installation
 
 ```bash
-git clone [https://github.com/YOUR_USERNAME/agentpay-gate.git](https://github.com/YOUR_USERNAME/agentpay-gate.git)
+git clone [https://github.com/s1ngh-divyanshi/agentpay-gate.git](https://github.com/s1ngh-divyanshi/agentpay-gate.git)
 cd agentpay-gate
-```
-
-### 2. Set Up Python Virtual Environment
-
-```bash
 python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r backend/requirements.txt  # Or install fastapi uvicorn requests python-dotenv rich
+source venv/bin/activate
+pip install -r backend/requirements.txt
 ```
 
-### 3. Configure Environment Variables
+### 2. Environment Setup
 
-Create a `.env` file in your root or `backend/` directory:
+Create a `.env` file in the root or `backend/` directory:
 
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
-RAZORPAY_KEY_ID=rzp_test_mockkey
-RAZORPAY_KEY_SECRET=mock_secret
+GEMINI_API_KEY=your_gemini_api_key
+RAZORPAY_KEY_ID=rzp_test_placeholder
+RAZORPAY_KEY_SECRET=rzp_secret_placeholder
 ```
 
-### 4. Run the Backend Server
+### 3. Launch
 
 ```bash
 uvicorn backend.app.main:app --reload --port 8000
 ```
 
-### 5. Access the Dashboard
-
-Open your browser and navigate to:
-
-- **Governance UI:** [http://localhost:8000/](http://localhost:8000/)
-- **Interactive API Docs (Swagger):** [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Dashboard:** [http://localhost:8000/](http://localhost:8000/)
+- **API Documentation:** [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 
-## 💡 Hackathon Demonstration Guide
+## 🧪 Demonstration Matrix
 
-Use the **Agent Execution Sandbox** directly on the web dashboard to demonstrate key protocol features to judges:
+| Action                      | Gate Evaluation          | System Outcome                                                           |
+| --------------------------- | ------------------------ | ------------------------------------------------------------------------ |
+| **Valid Order (< ₹5,000)**  | Within policy limits     | Settles automatically via Razorpay Orders API (`AUTONOMOUS`).            |
+| **Limit Breach (> ₹5,000)** | Hard cap exceeded        | Escalates to human sign-off via Payment Link (`HUMAN_FALLBACK`).         |
+| **Review & Pay ↗**          | Supervisor authorization | Settles order, binds payment ID, and updates status to `HUMAN_APPROVED`. |
+| **Verify Chain**            | Full cryptographic check | Recalculates all SHA-256 pointers to verify audit trail integrity.       |
 
-1. **Valid Order (< ₹5,000):** Triggers autonomous machine-to-merchant settlement (`AUTONOMOUS` mode with a generated Razorpay order ID).
-2. **Random Limit Breach (> ₹5,000):** Intercepts the basket, enforces policy constraints, issues a secure payment link, and flags the record for review (`HUMAN_FALLBACK`).
-3. **High-Value SKU (> ₹45k):** Tests enterprise infrastructure requisitions requiring supervisor sign-off.
-4. **Verify Chain:** Instantly computes SHA-256 pointers across all recorded blocks to prove tamper-free audit integrity.
+---
+
+## 🛡️ Security Guarantees
+
+- **Credential Isolation:** AI agents never receive raw API keys or settlement permissions.
+- **Tamper-Evident Ledger:** Modifying any historical block in storage breaks downstream hash pointers, immediately failing cryptographic checks.
+- **Explainable Auditing:** Every entry stores the agent's explicit reasoning trace alongside the cryptographic signature.
