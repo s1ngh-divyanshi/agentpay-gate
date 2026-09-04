@@ -1,0 +1,51 @@
+[
+  {
+    "record_id": "AUDIT-TX-0001",
+    "timestamp": "2026-09-02T13:00:00.000000+00:00",
+    "mandate_id": "MANDATE-DEMO-001",
+    "merchant_id": "MERCHANT-01",
+    "decision_status": "APPROVED",
+    "mode": "AUTONOMOUS_SETTLEMENT",
+    "claimed_total": 3499.0,
+    "calculated_total": 3499.0,
+    "razorpay_order_id": "order_auto_001_demo",
+    "razorpay_payment_link": null,
+    "reasoning_trace": "Selected ergonomic chair within authorized mandate limit.",
+    "items": [
+      {
+        "sku": "PROD-OFFICE-CHAIR-01",
+        "quantity": 1,
+        "unit_price": 3499.0
+      }
+    ],
+    "previous_block_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "digest_hash": "30ce3e130a3e5af0d2cda23521754fe26e140ba38c542983fb15173d377daa8e"
+  },
+  {
+    "record_id": "AUDIT-TX-0002",
+    "timestamp": "2026-09-02T13:05:00.000000+00:00",
+    "mandate_id": "MANDATE-DEMO-001",
+    "merchant_id": "MERCHANT-01",
+    "decision_status": "EXCEEDED_GLOBAL_LIMIT",
+    "mode": "HUMAN_FALLBACK_LINK",
+    "claimed_total": 7699.0,
+    "calculated_total": 7699.0,
+    "razorpay_order_id": null,
+    "razorpay_payment_link": "https://rzp.io/i/mock_safety_approval_link",
+    "reasoning_trace": "Autonomous buyer agent fulfilled setup intent with chair and keyboard. Verified sum: \u20b97699.0.",
+    "items": [
+      {
+        "sku": "PROD-OFFICE-CHAIR-01",
+        "quantity": 1,
+        "unit_price": 3499.0
+      },
+      {
+        "sku": "PROD-MECH-KB-02",
+        "quantity": 1,
+        "unit_price": 4200.0
+      }
+    ],
+    "previous_block_hash": "30ce3e130a3e5af0d2cda23521754fe26e140ba38c542983fb15173d377daa8e",
+    "digest_hash": "3690f93cf6d885ea8e3f3d26286c160913d70475f1169c66547d83fb9af3e87e"
+  }
+]
