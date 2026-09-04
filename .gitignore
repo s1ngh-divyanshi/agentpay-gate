@@ -22,5 +22,3 @@ Thumbs.db
 # Dynamic runtime ledger (keep baseline or ignore local mutations)
 *.log
 EOF
-
-backend/app/data/audit_ledger.json
