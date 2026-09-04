@@ -13,7 +13,7 @@ class ApproveRequest(BaseModel):
     record_id: str
 
 # 3. Default Pristine Demo Records for Reset Functionality
-INITIAL_RECORDS = [
+INITIAL_RECORDS_DATA = [
     {
         "record_id": "AUDIT-TX-0001",
         "timestamp": "2026-09-02T13:00:00.000000+00:00",
@@ -32,9 +32,7 @@ INITIAL_RECORDS = [
                 "quantity": 1,
                 "unit_price": 3499.0
             }
-        ],
-        "previous_block_hash": "0000000000000000000000000000000000000000000000000000000000000000",
-        "digest_hash": "15675d1c7dd7e6488d5e89a54bb3fbb457e5e3b5df5bfa4a6e60b8d5a1f284e3"
+        ]
     },
     {
         "record_id": "AUDIT-TX-0002",
@@ -59,9 +57,7 @@ INITIAL_RECORDS = [
                 "quantity": 1,
                 "unit_price": 4200.0
             }
-        ],
-        "previous_block_hash": "15675d1c7dd7e6488d5e89a54bb3fbb457e5e3b5df5bfa4a6e60b8d5a1f284e3",
-        "digest_hash": "8fccd0d9e81f626d1c493ef2b8dfa283995818d6ee5144b204642ab672922ec9"
+        ]
     }
 ]
 
@@ -143,7 +139,19 @@ async def approve_human_fallback(req: ApproveRequest):
 
 @router.post("/reset")
 async def reset_audit_ledger():
-    """Resets the audit ledger back to the initial baseline records."""
+    """Dynamically re-signs baseline records to guarantee a clean, tamper-free state."""
+    clean_records = []
+    
+    for i, data in enumerate(INITIAL_RECORDS_DATA):
+        rec = dict(data)
+        prev_hash = "0000000000000000000000000000000000000000000000000000000000000000" if i == 0 else clean_records[i-1]["digest_hash"]
+        rec["previous_block_hash"] = prev_hash
+        
+        payload_to_sign = f"{prev_hash}|{rec['record_id']}|{rec['timestamp']}|{rec['mandate_id']}|{rec['calculated_total']}|{rec['decision_status']}|{rec['reasoning_trace']}"
+        rec["digest_hash"] = hashlib.sha256(payload_to_sign.encode()).hexdigest()
+        clean_records.append(rec)
+
     with open(LEDGER_FILE, "w") as f:
-        json.dump(INITIAL_RECORDS, f, indent=2)
-    return {"status": "SUCCESS", "message": "Ledger restored to baseline state."}
+        json.dump(clean_records, f, indent=2)
+
+    return {"status": "SUCCESS", "message": "Ledger restored and mathematically signed clean."}
