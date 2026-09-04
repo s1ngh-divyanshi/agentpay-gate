@@ -333,7 +333,7 @@ async function refreshData() {
         </button>
       `;
     }
-    
+
     return `
       <tr onclick="openDetail('${r.record_id}')" class="hover:bg-[#191f2c] transition-colors cursor-pointer group">
         <td class="py-3 px-4 font-mono font-bold text-blue-400 group-hover:text-blue-300">${r.record_id}</td>
